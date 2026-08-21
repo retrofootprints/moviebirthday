@@ -74,9 +74,12 @@
           <span data-i18n="scoreLabel">Pontuação</span>: <span id="score-counter">0</span>
         </div>
       </div>
-      
+
+      <!-- Reserves its own space so it never shifts the layout when it appears -->
+      <div id="correct-toast" class="correct-toast"></div>
+
       <!-- Images container -->
-      <div class="flex flex-col md:flex-row items-center justify-center gap-4 w-full">
+      <div class="flex flex-row items-start justify-center gap-3 w-full">
         <!-- Actor 1 card -->
         <div 
           id="actor1" 
@@ -229,6 +232,7 @@
 
     const scoreCounter = document.getElementById("score-counter");
     const dingSound = document.getElementById("ding-sound");
+    const correctToastEl = document.getElementById("correct-toast");
 
     // Bottom info
     const ageDifferenceIndicator = document.getElementById("age-difference-indicator");
@@ -257,6 +261,7 @@
         gameOver: "Fim de Jogo!",
         finalScoreLabel: "A tua pontuação final foi",
         ok: "OK",
+        correct: "✅ Correto!",
         in: "em",
         photoUnavailable: "foto indisponível",
         actor1Alt: "Ator 1",
@@ -285,6 +290,7 @@
         gameOver: "Game Over!",
         finalScoreLabel: "Your final score was",
         ok: "OK",
+        correct: "✅ Correct!",
         in: "in",
         photoUnavailable: "photo unavailable",
         actor1Alt: "Actor 1",
@@ -360,6 +366,7 @@
     let currentDifferenceThreshold = 15;  // Start with 15
     let currentPair = null; // Will store the two chosen actors
     let differenceNeeded = 15; // The integer difference we look for
+    let isTransitioning = false; // Blocks clicks during the "Correct!" pause
 
     applyLanguage();
 
@@ -409,6 +416,8 @@
       currentScore = 0;
       scoreCounter.textContent = currentScore;
       currentDifferenceThreshold = 15;
+      isTransitioning = false;
+      correctToastEl.classList.remove("show");
       openingScreen.classList.add("hidden");
       gameScreen.classList.remove("hidden");
       nextRound();
@@ -488,6 +497,8 @@
     }
 
     function handleActorClick(actorIndex) {
+      if (isTransitioning) return;
+
       // Determine which actor is older
       const ageA = parseInt(currentPair[0].calc_age, 10);
       const ageB = parseInt(currentPair[1].calc_age, 10);
@@ -507,7 +518,15 @@
         if (currentDifferenceThreshold < 1) {
           currentDifferenceThreshold = 1;
         }
-        nextRound();
+
+        isTransitioning = true;
+        correctToastEl.textContent = t("correct");
+        correctToastEl.classList.add("show");
+        setTimeout(() => {
+          correctToastEl.classList.remove("show");
+          isTransitioning = false;
+          nextRound();
+        }, 800);
       } else {
         // Wrong guess
         endGame(false); // show the failing pair
@@ -526,7 +545,7 @@
         // Show the failed pair's images and the explanation
         const [leftActor, rightActor] = currentPair;
         gameOverDetails.innerHTML = `
-          <div class="flex flex-col md:flex-row justify-center items-center gap-4 mt-4">
+          <div class="flex flex-row justify-center items-center gap-3 mt-4">
             <!-- Left Actor -->
             <div class="flex flex-col items-center">
               <img

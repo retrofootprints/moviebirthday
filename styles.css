@@ -109,9 +109,10 @@ a:hover, .hover\:bg-pink-600:hover { background-color: #db2777; }
 .list-disc { list-style-type: disc; }
 .list-inside { list-style-position: inside; }
 
-/* Responsive: match Tailwind's md breakpoint (768px) */
-@media (min-width: 768px) {
-  .md\:flex-row { flex-direction: row; }
+/* Keep the actor cards comfortably side by side on narrow phones */
+@media (max-width: 400px) {
+  #actor1-img, #actor2-img { width: 7.5rem; height: 7.5rem; }
+  #actor1-name, #actor2-name { width: 7.5rem; }
 }
 
 /* Language switcher */
@@ -135,6 +136,20 @@ a:hover, .hover\:bg-pink-600:hover { background-color: #db2777; }
 }
 .lang-btn:hover { opacity: 0.85; }
 .lang-btn.active { border-color: #ec4899; }
+
+/* "Correct!" toast between rounds - reserves space so nothing shifts */
+.correct-toast {
+  min-height: 1.75rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  font-size: 1.125rem;
+  color: #16a34a;
+  opacity: 0;
+  transition: opacity 0.2s ease;
+}
+.correct-toast.show { opacity: 1; }
 
 /* Fallback shown when an actor photo fails to load */
 img.img-error {
