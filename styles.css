@@ -1,0 +1,123 @@
+/* Hand-written stylesheet replacing the Tailwind CDN runtime.
+   Class names match the markup in index.html so no HTML changes were needed;
+   values mirror the Tailwind utilities that were in use. */
+
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(to right, #fdf2f8, #fef9c3);
+  color: #1f2937;
+  font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif;
+}
+
+.hidden { display: none !important; }
+
+/* Layout */
+.flex { display: flex; }
+.flex-col { flex-direction: column; }
+.items-center { align-items: center; }
+.justify-center { justify-content: center; }
+.justify-between { justify-content: space-between; }
+.justify-around { justify-content: space-around; }
+.text-center { text-align: center; }
+.relative { position: relative; }
+.fixed { position: fixed; }
+.absolute { position: absolute; }
+.inset-0 { top: 0; right: 0; bottom: 0; left: 0; }
+.mx-auto { margin-left: auto; margin-right: auto; }
+
+/* Sizing */
+.w-full { width: 100%; }
+.max-w-md { max-width: 28rem; }
+.w-40 { width: 10rem; }
+.h-40 { height: 10rem; }
+.w-32 { width: 8rem; }
+.h-32 { height: 8rem; }
+.min-h-screen { min-height: 100vh; }
+.object-cover { object-fit: cover; }
+
+/* Spacing */
+.p-1 { padding: 0.25rem; }
+.p-2 { padding: 0.5rem; }
+.p-4 { padding: 1rem; }
+.p-6 { padding: 1.5rem; }
+.px-2 { padding-left: 0.5rem; padding-right: 0.5rem; }
+.px-4 { padding-left: 1rem; padding-right: 1rem; }
+.py-2 { padding-top: 0.5rem; padding-bottom: 0.5rem; }
+.mt-2 { margin-top: 0.5rem; }
+.mt-4 { margin-top: 1rem; }
+.mb-2 { margin-bottom: 0.5rem; }
+.mb-4 { margin-bottom: 1rem; }
+.top-2 { top: 0.5rem; }
+.right-2 { right: 0.5rem; }
+.gap-4 { gap: 1rem; }
+
+.space-y-1 > * + * { margin-top: 0.25rem; }
+.space-y-4 > * + * { margin-top: 1rem; }
+
+/* Borders / radius / shadow */
+.rounded { border-radius: 0.25rem; }
+.rounded-lg { border-radius: 0.5rem; }
+.border-2 { border-width: 2px; border-style: solid; }
+.border-pink-300 { border-color: #f9a8d4; }
+.shadow { box-shadow: 0 1px 3px rgba(0,0,0,0.1), 0 1px 2px rgba(0,0,0,0.06); }
+.shadow-lg { box-shadow: 0 10px 15px -3px rgba(0,0,0,0.1), 0 4px 6px -4px rgba(0,0,0,0.1); }
+
+/* Typography */
+.text-sm { font-size: 0.875rem; line-height: 1.25rem; }
+.text-xl { font-size: 1.25rem; line-height: 1.75rem; }
+.text-2xl { font-size: 1.5rem; line-height: 2rem; }
+.text-3xl { font-size: 1.875rem; line-height: 2.25rem; }
+.font-semibold { font-weight: 600; }
+.font-bold { font-weight: 700; }
+.break-words { overflow-wrap: break-word; }
+
+.text-white { color: #ffffff; }
+.text-gray-500 { color: #6b7280; }
+.text-gray-700 { color: #374151; }
+.text-gray-800 { color: #1f2937; }
+.text-pink-500 { color: #ec4899; }
+.text-pink-600 { color: #db2777; }
+.text-green-600 { color: #16a34a; }
+.text-red-600 { color: #dc2626; }
+
+.bg-white { background-color: #ffffff; }
+.bg-pink-500 { background-color: #ec4899; }
+.bg-yellow-500 { background-color: #eab308; }
+.bg-green-500 { background-color: #22c55e; }
+.bg-black.bg-opacity-50 { background-color: rgba(0, 0, 0, 0.5); }
+
+button {
+  border: none;
+  font-family: inherit;
+  cursor: pointer;
+}
+
+.cursor-pointer { cursor: pointer; }
+
+a:hover, .hover\:bg-pink-600:hover { background-color: #db2777; }
+.hover\:bg-yellow-600:hover { background-color: #ca8a04; }
+.hover\:bg-green-600:hover { background-color: #16a34a; }
+.hover\:text-gray-800:hover { color: #1f2937; }
+
+.list-disc { list-style-type: disc; }
+.list-inside { list-style-position: inside; }
+
+/* Responsive: match Tailwind's md breakpoint (768px) */
+@media (min-width: 768px) {
+  .md\:flex-row { flex-direction: row; }
+}
+
+/* Fallback shown when an actor photo fails to load */
+img.img-error {
+  background: #f3f4f6;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}

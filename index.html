@@ -11,9 +11,9 @@
   gtag('config', 'G-K1SS0G26F0');
 </script>
   <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Who's Older?</title>
-  <!-- Tailwind CSS via CDN -->
-  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="styles.css" />
 </head>
 <body class="bg-gradient-to-r from-pink-50 to-yellow-100 min-h-screen flex flex-col items-center justify-center text-gray-800">
 
@@ -112,8 +112,11 @@
       <div class="bg-white rounded-lg shadow-lg w-full max-w-md p-6 relative">
         <h3 class="text-xl font-bold mb-2 text-pink-600">How Does This Work?</h3>
         <p class="text-sm text-gray-700">
-          <!-- Add or edit the explanation text here -->
-          This is placeholder text. You can explain how the game works in detail!
+          You'll see two actors, each in a specific movie role. Guess who was
+          <strong>older</strong> when that movie came out &mdash; tap their photo.
+          Guess right and your score goes up, and the age gap between the next
+          pair gets a little smaller, so it keeps getting harder. Guess wrong
+          and the game ends, showing you the pair and their ages at the time.
         </p>
         <button
           id="close-how-it-works"
@@ -208,6 +211,17 @@
     const ageDifferenceIndicator = document.getElementById("age-difference-indicator");
     const difficultyIndicator = document.getElementById("difficulty-indicator");
 
+    // Simple gray placeholder shown if a photo fails to load, so the game
+    // never shows a broken-image icon.
+    const IMG_FALLBACK =
+      "data:image/svg+xml;charset=UTF-8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Crect width='160' height='160' fill='%23f3f4f6'/%3E%3Ctext x='50%25' y='50%25' font-family='sans-serif' font-size='14' fill='%239ca3af' text-anchor='middle' dominant-baseline='middle'%3Ephoto unavailable%3C/text%3E%3C/svg%3E";
+
+    function imgFallback(img) {
+      img.onerror = null;
+      img.src = IMG_FALLBACK;
+      img.classList.add("img-error");
+    }
+
     // Game data
     let allActors = [];
     let currentScore = 0;
@@ -241,6 +255,9 @@
 
     actor1El.addEventListener("click", () => handleActorClick(0));
     actor2El.addEventListener("click", () => handleActorClick(1));
+
+    actor1Img.addEventListener("error", () => imgFallback(actor1Img));
+    actor2Img.addEventListener("error", () => imgFallback(actor2Img));
 
     // Fetch data on load
     window.addEventListener("DOMContentLoaded", async () => {
@@ -314,9 +331,11 @@
     }
 
     function renderActors(actorA, actorB) {
+      actor1Img.classList.remove("img-error");
       actor1Img.src = "images/" + actorA.image;
       actor1Name.textContent = `${actorA.actor} in ${actorA.filme}`;
 
+      actor2Img.classList.remove("img-error");
       actor2Img.src = "images/" + actorB.image;
       actor2Name.textContent = `${actorB.actor} in ${actorB.filme}`;
 
@@ -367,18 +386,20 @@
           <div class="flex flex-col md:flex-row justify-center items-center gap-4 mt-4">
             <!-- Left Actor -->
             <div class="flex flex-col items-center">
-              <img 
-                src="images/${leftActor.image}" 
-                alt="${leftActor.actor}" 
+              <img
+                src="images/${leftActor.image}"
+                alt="${leftActor.actor}"
                 class="w-32 h-32 object-cover rounded mb-2"
+                onerror="imgFallback(this)"
               />
             </div>
             <!-- Right Actor -->
             <div class="flex flex-col items-center">
-              <img 
-                src="images/${rightActor.image}" 
-                alt="${rightActor.actor}" 
+              <img
+                src="images/${rightActor.image}"
+                alt="${rightActor.actor}"
                 class="w-32 h-32 object-cover rounded mb-2"
+                onerror="imgFallback(this)"
               />
             </div>
           </div>
