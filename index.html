@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt">
 <head>
 <!-- Google tag (gtag.js) -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-K1SS0G26F0"></script>
@@ -12,45 +12,66 @@
 </script>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Who's Older?</title>
+  <title>Quem é Mais Velho?</title>
   <link rel="stylesheet" href="styles.css" />
 </head>
 <body class="bg-gradient-to-r from-pink-50 to-yellow-100 min-h-screen flex flex-col items-center justify-center text-gray-800">
+
+  <!-- Language switcher -->
+  <div id="lang-switcher" class="lang-switcher">
+    <button
+      id="lang-pt"
+      class="lang-btn"
+      data-lang="pt"
+      aria-label="Português"
+      title="Português"
+    >🇵🇹</button>
+    <button
+      id="lang-en"
+      class="lang-btn"
+      data-lang="en"
+      aria-label="English"
+      title="English"
+    >🇬🇧</button>
+  </div>
 
   <!-- Main container -->
   <div id="app" class="w-full max-w-md mx-auto p-4">
     <!-- Opening Screen -->
     <div id="opening-screen" class="flex flex-col items-center space-y-4">
-      <h1 class="text-3xl font-bold text-pink-500">Who's Older?</h1>
+      <h1 class="text-3xl font-bold text-pink-500" data-i18n="appTitle">Quem é Mais Velho?</h1>
 
-      <button 
+      <button
         id="play-btn"
         class="bg-pink-500 hover:bg-pink-600 text-white font-semibold py-2 px-4 rounded shadow"
+        data-i18n="play"
       >
-        Let's Play
+        Jogar
       </button>
 
-      <button 
+      <button
         id="how-it-works-btn"
         class="bg-yellow-500 hover:bg-yellow-600 text-white font-semibold py-2 px-4 rounded shadow"
+        data-i18n="howItWorks"
       >
-        How Does This Work?
+        Como Funciona?
       </button>
 
       <button
         id="see-records-btn"
         class="bg-green-500 hover:bg-green-600 text-white font-semibold py-2 px-4 rounded shadow"
+        data-i18n="seeRecords"
       >
-        See Records
+        Ver Recordes
       </button>
     </div>
 
     <!-- Game Screen -->
     <div id="game-screen" class="hidden flex flex-col items-center space-y-4">
       <div class="w-full flex justify-between items-center mb-2">
-        <h2 class="text-2xl font-bold text-pink-600">Who's Older?</h2>
+        <h2 class="text-2xl font-bold text-pink-600" data-i18n="appTitle">Quem é Mais Velho?</h2>
         <div class="text-xl font-bold text-gray-700">
-          Score: <span id="score-counter">0</span>
+          <span data-i18n="scoreLabel">Pontuação</span>: <span id="score-counter">0</span>
         </div>
       </div>
       
@@ -96,10 +117,10 @@
       <!-- Bottom info: difference and difficulty -->
       <div class="mt-4 w-full flex justify-around items-center text-gray-700 font-semibold">
         <div>
-          Current Difference: <span id="age-difference-indicator">-</span>
+          <span data-i18n="currentDifference">Diferença Atual</span>: <span id="age-difference-indicator">-</span>
         </div>
         <div>
-          Difficulty: <span id="difficulty-indicator">-</span>
+          <span data-i18n="difficultyLabel">Dificuldade</span>: <span id="difficulty-indicator">-</span>
         </div>
       </div>
     </div>
@@ -110,13 +131,14 @@
       class="hidden fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4"
     >
       <div class="bg-white rounded-lg shadow-lg w-full max-w-md p-6 relative">
-        <h3 class="text-xl font-bold mb-2 text-pink-600">How Does This Work?</h3>
-        <p class="text-sm text-gray-700">
-          You'll see two actors, each in a specific movie role. Guess who was
-          <strong>older</strong> when that movie came out &mdash; tap their photo.
-          Guess right and your score goes up, and the age gap between the next
-          pair gets a little smaller, so it keeps getting harder. Guess wrong
-          and the game ends, showing you the pair and their ages at the time.
+        <h3 class="text-xl font-bold mb-2 text-pink-600" data-i18n="howItWorks">Como Funciona?</h3>
+        <p class="text-sm text-gray-700" data-i18n-html="howItWorksText">
+          Vais ver dois atores, cada um num papel de um filme específico.
+          Adivinha quem era <strong>mais velho</strong> quando esse filme foi
+          lançado &mdash; toca na foto. Acertas e a pontuação sobe, e a
+          diferença de idades do par seguinte fica um pouco menor, por isso
+          vai ficando cada vez mais difícil. Erras e o jogo termina, mostrando
+          o par e as idades na altura.
         </p>
         <button
           id="close-how-it-works"
@@ -133,7 +155,7 @@
       class="hidden fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4"
     >
       <div class="bg-white rounded-lg shadow-lg w-full max-w-md p-6 relative">
-        <h3 class="text-xl font-bold mb-2 text-green-600">Top Scores</h3>
+        <h3 class="text-xl font-bold mb-2 text-green-600" data-i18n="topScores">Melhores Pontuações</h3>
         <ul id="scores-list" class="list-disc list-inside space-y-1 text-gray-700">
           <!-- Filled by JavaScript -->
         </ul>
@@ -152,9 +174,9 @@
       class="hidden fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4"
     >
       <div class="bg-white rounded-lg shadow-lg w-full max-w-md p-6 relative text-center">
-        <h3 class="text-2xl font-bold text-red-600 mb-4">Game Over!</h3>
+        <h3 class="text-2xl font-bold text-red-600 mb-4" data-i18n="gameOver">Fim de Jogo!</h3>
         <p class="mb-4 text-gray-700">
-          Your final score was: <span id="final-score" class="font-bold"></span>
+          <span data-i18n="finalScoreLabel">A tua pontuação final foi</span>: <span id="final-score" class="font-bold"></span>
         </p>
         <!-- Container to display the failed pair -->
         <div id="game-over-details" class="flex flex-col items-center"></div>
@@ -162,6 +184,7 @@
         <button
           id="game-over-ok-btn"
           class="bg-pink-500 hover:bg-pink-600 text-white font-semibold py-2 px-4 rounded shadow mx-auto mt-4"
+          data-i18n="ok"
         >
           OK
         </button>
@@ -211,14 +234,123 @@
     const ageDifferenceIndicator = document.getElementById("age-difference-indicator");
     const difficultyIndicator = document.getElementById("difficulty-indicator");
 
+    // --- i18n ---------------------------------------------------------
+    const translations = {
+      pt: {
+        pageTitle: "Quem é Mais Velho?",
+        appTitle: "Quem é Mais Velho?",
+        play: "Jogar",
+        howItWorks: "Como Funciona?",
+        howItWorksText:
+          "Vais ver dois atores, cada um num papel de um filme específico. " +
+          "Adivinha quem era <strong>mais velho</strong> quando esse filme foi " +
+          "lançado &mdash; toca na foto. Acertas e a pontuação sobe, e a " +
+          "diferença de idades do par seguinte fica um pouco menor, por isso " +
+          "vai ficando cada vez mais difícil. Erras e o jogo termina, mostrando " +
+          "o par e as idades na altura.",
+        seeRecords: "Ver Recordes",
+        scoreLabel: "Pontuação",
+        currentDifference: "Diferença Atual",
+        difficultyLabel: "Dificuldade",
+        topScores: "Melhores Pontuações",
+        noRecords: "Ainda não há registos!",
+        gameOver: "Fim de Jogo!",
+        finalScoreLabel: "A tua pontuação final foi",
+        ok: "OK",
+        in: "em",
+        photoUnavailable: "foto indisponível",
+        actor1Alt: "Ator 1",
+        actor2Alt: "Ator 2",
+        dateLocale: "pt-PT",
+        scoreRecord: (score, date) => `Pontuação: ${score} em ${date}`,
+        ageSentence: (actor, age, movie) => `${actor} tinha ${age} anos em "${movie}".`,
+      },
+      en: {
+        pageTitle: "Who's Older?",
+        appTitle: "Who's Older?",
+        play: "Let's Play",
+        howItWorks: "How Does This Work?",
+        howItWorksText:
+          "You'll see two actors, each in a specific movie role. Guess who was " +
+          "<strong>older</strong> when that movie came out &mdash; tap their photo. " +
+          "Guess right and your score goes up, and the age gap between the next " +
+          "pair gets a little smaller, so it keeps getting harder. Guess wrong " +
+          "and the game ends, showing you the pair and their ages at the time.",
+        seeRecords: "See Records",
+        scoreLabel: "Score",
+        currentDifference: "Current Difference",
+        difficultyLabel: "Difficulty",
+        topScores: "Top Scores",
+        noRecords: "No records yet!",
+        gameOver: "Game Over!",
+        finalScoreLabel: "Your final score was",
+        ok: "OK",
+        in: "in",
+        photoUnavailable: "photo unavailable",
+        actor1Alt: "Actor 1",
+        actor2Alt: "Actor 2",
+        dateLocale: "en-US",
+        scoreRecord: (score, date) => `Score: ${score} on ${date}`,
+        ageSentence: (actor, age, movie) => `${actor} was ${age} years old in "${movie}".`,
+      },
+    };
+
+    let currentLang = localStorage.getItem("whos_older_lang");
+    if (currentLang !== "pt" && currentLang !== "en") currentLang = "pt";
+
+    function t(key) {
+      return translations[currentLang][key];
+    }
+
+    const langButtons = document.querySelectorAll(".lang-btn");
+    langButtons.forEach((btn) => {
+      btn.addEventListener("click", () => {
+        currentLang = btn.dataset.lang;
+        localStorage.setItem("whos_older_lang", currentLang);
+        applyLanguage();
+      });
+    });
+
+    function applyLanguage() {
+      document.documentElement.lang = currentLang;
+      document.title = t("pageTitle");
+
+      document.querySelectorAll("[data-i18n]").forEach((el) => {
+        el.textContent = t(el.dataset.i18n);
+      });
+      document.querySelectorAll("[data-i18n-html]").forEach((el) => {
+        el.innerHTML = t(el.dataset.i18nHtml);
+      });
+
+      actor1Img.alt = t("actor1Alt");
+      actor2Img.alt = t("actor2Alt");
+
+      langButtons.forEach((btn) => {
+        btn.classList.toggle("active", btn.dataset.lang === currentLang);
+      });
+
+      updateActorLabels();
+
+      if (!seeRecordsModal.classList.contains("hidden")) {
+        showRecords();
+      }
+    }
+    // --------------------------------------------------------------------
+
     // Simple gray placeholder shown if a photo fails to load, so the game
-    // never shows a broken-image icon.
-    const IMG_FALLBACK =
-      "data:image/svg+xml;charset=UTF-8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Crect width='160' height='160' fill='%23f3f4f6'/%3E%3Ctext x='50%25' y='50%25' font-family='sans-serif' font-size='14' fill='%239ca3af' text-anchor='middle' dominant-baseline='middle'%3Ephoto unavailable%3C/text%3E%3C/svg%3E";
+    // never shows a broken-image icon. Rebuilt per language.
+    function getImgFallback() {
+      const svg =
+        `<svg xmlns='http://www.w3.org/2000/svg' width='160' height='160'>` +
+        `<rect width='160' height='160' fill='#f3f4f6'/>` +
+        `<text x='50%' y='50%' font-family='sans-serif' font-size='14' fill='#9ca3af' ` +
+        `text-anchor='middle' dominant-baseline='middle'>${t("photoUnavailable")}</text></svg>`;
+      return "data:image/svg+xml;charset=UTF-8," + encodeURIComponent(svg);
+    }
 
     function imgFallback(img) {
       img.onerror = null;
-      img.src = IMG_FALLBACK;
+      img.src = getImgFallback();
       img.classList.add("img-error");
     }
 
@@ -228,6 +360,8 @@
     let currentDifferenceThreshold = 15;  // Start with 15
     let currentPair = null; // Will store the two chosen actors
     let differenceNeeded = 15; // The integer difference we look for
+
+    applyLanguage();
 
     // Event Listeners
     playBtn.addEventListener("click", startGame);
@@ -333,15 +467,24 @@
     function renderActors(actorA, actorB) {
       actor1Img.classList.remove("img-error");
       actor1Img.src = "images/" + actorA.image;
-      actor1Name.textContent = `${actorA.actor} in ${actorA.filme}`;
 
       actor2Img.classList.remove("img-error");
       actor2Img.src = "images/" + actorB.image;
-      actor2Name.textContent = `${actorB.actor} in ${actorB.filme}`;
+
+      updateActorLabels();
 
       // Show the difference and difficulty
       ageDifferenceIndicator.textContent = differenceNeeded;
       difficultyIndicator.textContent = (15 - differenceNeeded).toString();
+    }
+
+    // Re-renders the actor name/movie labels for the current pair in the
+    // active language, without touching the images (used on round render
+    // and again if the user switches language mid-round).
+    function updateActorLabels() {
+      if (!currentPair) return;
+      actor1Name.textContent = `${currentPair[0].actor} ${t("in")} ${currentPair[0].filme}`;
+      actor2Name.textContent = `${currentPair[1].actor} ${t("in")} ${currentPair[1].filme}`;
     }
 
     function handleActorClick(actorIndex) {
@@ -405,8 +548,8 @@
           </div>
           <!-- Explanation Text -->
           <p class="mt-4 text-gray-700 text-sm px-2">
-            ${leftActor.actor} was ${leftActor.calc_age} years old in "${leftActor.filme}". 
-            ${rightActor.actor} was ${rightActor.calc_age} years old in "${rightActor.filme}".
+            ${t("ageSentence")(leftActor.actor, leftActor.calc_age, leftActor.filme)}
+            ${t("ageSentence")(rightActor.actor, rightActor.calc_age, rightActor.filme)}
           </p>
         `;
       }
@@ -430,7 +573,7 @@
       const scores = getScores();
       const newRecord = {
         score: score,
-        date: new Date().toLocaleString()
+        date: new Date().toLocaleString(t("dateLocale"))
       };
       scores.push(newRecord);
       // Sort descending by score
@@ -445,13 +588,13 @@
       scoresList.innerHTML = "";
       if (scores.length === 0) {
         const li = document.createElement("li");
-        li.textContent = "No records yet!";
+        li.textContent = t("noRecords");
         scoresList.appendChild(li);
         return;
       }
       scores.forEach(rec => {
         const li = document.createElement("li");
-        li.textContent = `Score: ${rec.score} on ${rec.date}`;
+        li.textContent = t("scoreRecord")(rec.score, rec.date);
         scoresList.appendChild(li);
       });
     }
