@@ -150,6 +150,7 @@ a:hover, .hover\:bg-pink-600:hover { background-color: #db2777; }
   transition: opacity 0.2s ease;
 }
 .correct-toast.show { opacity: 1; }
+.correct-toast.wrong { color: #dc2626; }
 
 /* Fallback shown when an actor photo fails to load */
 img.img-error {

@@ -262,6 +262,7 @@
         finalScoreLabel: "A tua pontuação final foi",
         ok: "OK",
         correct: "✅ Correto!",
+        wrong: "❌ Errado!",
         in: "em",
         photoUnavailable: "foto indisponível",
         actor1Alt: "Ator 1",
@@ -291,6 +292,7 @@
         finalScoreLabel: "Your final score was",
         ok: "OK",
         correct: "✅ Correct!",
+        wrong: "❌ Wrong!",
         in: "in",
         photoUnavailable: "photo unavailable",
         actor1Alt: "Actor 1",
@@ -417,7 +419,7 @@
       scoreCounter.textContent = currentScore;
       currentDifferenceThreshold = 15;
       isTransitioning = false;
-      correctToastEl.classList.remove("show");
+      correctToastEl.className = "correct-toast";
       openingScreen.classList.add("hidden");
       gameScreen.classList.remove("hidden");
       nextRound();
@@ -518,19 +520,24 @@
         if (currentDifferenceThreshold < 1) {
           currentDifferenceThreshold = 1;
         }
-
-        isTransitioning = true;
-        correctToastEl.textContent = t("correct");
-        correctToastEl.classList.add("show");
-        setTimeout(() => {
-          correctToastEl.classList.remove("show");
-          isTransitioning = false;
-          nextRound();
-        }, 800);
+        showRoundToast("correct", false, nextRound);
       } else {
         // Wrong guess
-        endGame(false); // show the failing pair
+        showRoundToast("wrong", true, () => endGame(false));
       }
+    }
+
+    // Briefly shows a "Correct!"/"Wrong!" message, blocking further clicks,
+    // then runs the given callback (next round, or the game-over screen).
+    function showRoundToast(key, isWrong, callback) {
+      isTransitioning = true;
+      correctToastEl.textContent = t(key);
+      correctToastEl.className = "correct-toast show" + (isWrong ? " wrong" : "");
+      setTimeout(() => {
+        correctToastEl.classList.remove("show");
+        isTransitioning = false;
+        callback();
+      }, 800);
     }
 
     // Pass a boolean if no pair was found or if user guessed incorrectly
